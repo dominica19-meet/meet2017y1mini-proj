@@ -82,15 +82,16 @@ turtle.onkeypress(right, RIGHT_ARROW)
 turtle.listen()
 
 def make_food():
-    min_x=-int(SIZE_X/2/SQUARE_SIZE)+1
-    max_x=int(SIZE_X/2/SQUARE_SIZE)-1
-    min_y=-int(SIZE_Y/2/SQUARE_SIZE)-1
-    max_y=int(SIZE_Y/2/SQUARE_SIZE)+1
+    min_x=-int(size_x/2/square_size)+1
+    max_x=int(size_x/2/square_size)-1
+    min_y=-int(size_y/2/square_size)-1
+    max_y=int(size_y/2/square_size)+1
     food_x=random.randint(min_x,max_x)*square_size
     food_y=random.randint(min_y,max_y)*square_size
     food.goto(food_x,food_y)
-    food_pos.append(food_x,food_y)
-    food_stamp.append(food_x,food_y)
+    food_pos.append((food_x,food_y))
+    f=food.stamp()
+    food_stamps.append(f)
     
     
     
@@ -99,7 +100,7 @@ def move_snake():
     my_pos=snake.pos()
     x_pos=my_pos[0]
     y_pos=my_pos[1]
-    turtle.ontimer(move_snake,TIME_STEP)
+    
 
 
 
@@ -120,16 +121,19 @@ def move_snake():
     pos_list.append(my_pos)
     new_stamp= snake.stamp()
     stamp_list.append(new_stamp)
-    global food-stamps, food_pos
+
+    
+    global food_stamps, food_pos
     if snake.pos() in food_pos:
         food_ind=food_pos.index(snake.pos())
-        food.clearstamp(food_stamp[food_ind])
+        food.clearstamp(food_stamps[food_ind])
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
         print("you have eaten the food!")
-        old_stamp=stamp_list.pop(0)
-        snake.clearstamp(old_stamp)
-        pos_list.pop(0)
+        make_food()
+    old_stamp=stamp_list.pop(0)
+    snake.clearstamp(old_stamp)
+    pos_list.pop(0)
     
     
     new_pos=snake.pos()
@@ -148,6 +152,10 @@ def move_snake():
     elif new_y_pos <= DOWN_EDGE:
         print("you hit the down edge! game over!")
         quit()
+    if pos_list[-1] in pos_list[:-1]:
+          print("blablabla")
+          quit()
+          
     turtle.ontimer(move_snake,TIME_STEP)    
 move_snake()
 turtle.register_shape("trash.gif")
@@ -163,6 +171,8 @@ for hamham in food_pos:
     food_stamps.append(food_stamp)
     
 turtle.hideturtle()
+ 
+
 
     
 

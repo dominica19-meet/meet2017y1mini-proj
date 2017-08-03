@@ -2,7 +2,7 @@ import turtle
 import random
 
 turtle.tracer(1,0)
-
+turtle.fillcolor("pink")
 size_x=800
 size_y=500
 turtle.setup(size_x, size_y)
@@ -20,7 +20,8 @@ food_stamps=[]
 
 
 snake=turtle.clone()
-snake.shape("square")
+snake.shape("circle")
+
 
 turtle.hideturtle()
 for snake_1 in range(start_length):
@@ -131,9 +132,11 @@ def move_snake():
         food_stamps.pop(food_ind)
         print("you have eaten the food!")
         make_food()
-    old_stamp=stamp_list.pop(0)
-    snake.clearstamp(old_stamp)
-    pos_list.pop(0)
+    else: 
+        
+        old_stamp=stamp_list.pop(0)
+        snake.clearstamp(old_stamp)
+        pos_list.pop(0)
     
     
     new_pos=snake.pos()
